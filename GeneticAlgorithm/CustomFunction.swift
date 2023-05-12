@@ -9,8 +9,8 @@ import Foundation
 
 
 
-public func weightedRandomChoice<T, W: Numeric & Comparable >(sequence: [T], weights: [W], k: Int) -> [T] {
-    var results = [T]()
+public func weightedRandomChoice<T, W: Numeric & Comparable >(sequence: Set<T>, weights: [W], k: Int) -> Set<T> {
+    var results = Set<T>()
     let totalWeight = weights.reduce(0.0) {$0 + Double($1 as! NSNumber)}
     for _ in 0..<k {
         let randomValue = Double(arc4random_uniform(UInt32.max)) / Double(UInt32.max)
@@ -18,7 +18,7 @@ public func weightedRandomChoice<T, W: Numeric & Comparable >(sequence: [T], wei
         for (index, element) in sequence.enumerated() {
             cumulativeWeight += Double(weights[index] as! NSNumber) / totalWeight
             if randomValue <= cumulativeWeight {
-                results.append(element)
+                results.insert(element)
                 break
             }
         }
@@ -28,23 +28,24 @@ public func weightedRandomChoice<T, W: Numeric & Comparable >(sequence: [T], wei
 
 
 
-
-public func sorted<T, V: Comparable>(_ iterable: [T], key: @escaping (T) -> V?, reverse: Bool = false) -> [T] {
-    let sortedIterable = iterable.sorted {
-        if let lhs = key($0), let rhs = key($1){
-            if reverse {
-                return lhs > rhs
-            } else {
-                return lhs < rhs
-            }
-        }else{
-            return true
-        }
-        
-       
-    }
-    return sortedIterable
-}
+//
+//public func sorted<T, V: Comparable>(_ iterable: Set<T>, key: @escaping (T) -> V?, reverse: Bool = false) -> Set<T> {
+//    
+//    let sortedIterable = iterable.sorted {
+//        if let lhs = key($0), let rhs = key($1){
+//            if reverse {
+//                return lhs > rhs
+//            } else {
+//                return lhs < rhs
+//            }
+//        }else{
+//            return true
+//        }
+//        
+//       
+//    }
+//    return sortedIterable
+//}
 
 
 extension Array{

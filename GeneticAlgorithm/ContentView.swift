@@ -38,7 +38,7 @@ struct ContentView: View {
         ]
         
         
-        self.geneticAlg = .init(modelArray: things, populationSize: 10000000, generationLimit: 1000000000, genomeInterval: 0...10, fitnessLimit: Float(1000000000000), evaluationFunction: { [self] genome in
+        self.geneticAlg = .init(modelArray: things, populationSize: 1000000000, generationLimit: 1000000000, genomeInterval: 0...10, fitnessLimit: Float(1000000000000), evaluationFunction: { [self] genome in
             
             var weight:Float = 0
             var value:Float = 0
@@ -132,7 +132,7 @@ struct ContentView: View {
                         HStack{
                          
                            if !self.response.population.isEmpty{
-                            Text("\(self.response.population[0] [self.things.firstIndex(where: {return $0.id == thing.id})!])").font(Font.system(.title2, design: .default))
+                               Text("\(self.response.population.first! [self.things.firstIndex(where: {return $0.id == thing.id})!])").font(Font.system(.title2, design: .default))
                                    .fontWeight(.bold)
                            }
                             Text(thing.name).font(Font.system(.title2, design: .default))

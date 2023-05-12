@@ -13,7 +13,7 @@ import SwiftUI
 
 typealias Cromossome = Int8
 typealias Genome = Array<Cromossome>
-typealias Population = Array<Genome>
+typealias Population = Set<Genome>
 
 
 class Response: ObservableObject{
@@ -55,7 +55,7 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
     
     var subject: PassthroughSubject<Response,Never> = .init()
     var subjectPop: PassthroughSubject<ResponsePopulation,Never> = .init()
-
+    
     
     var modelArray: Array<T>
     var populationSize: Int
@@ -133,54 +133,26 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
     //    }
     
     
-    private func generatePopulation(size: Int, genomeLength: Int) async -> [URL] {
-        let batchSize = 100
-        let numBatches = Int(ceil(Double(size) / Double(batchSize)))
-        let fileManager = FileManager.default
-        let tempDir = fileManager.temporaryDirectory
-        let tempFilePrefix = "batch_"
-        var batchFiles: [URL] = []
+    private func generatePopulation(size: Int, genomeLength: Int) async -> Population {
         
-        for batchIndex in 0..<numBatches {
-            let batchStartIndex = batchIndex * batchSize
-            let batchEndIndex = min((batchIndex + 1) * batchSize, size)
-            let batchCount = batchEndIndex - batchStartIndex
-            let batch = await withTaskGroup(of: Genome.self) { group -> Population in
-                for _ in 0..<batchCount {
-                    group.addTask { [self] in await generateGenomes(lenght: genomeLength) }
+        var response = Population.init()
+       
+        await withTaskGroup(of: Genome.self) { taskGroup in
+            for _ in 0...size {
+                    taskGroup.addTask {
+                        return self.generateGenomes(lenght: genomeLength)
+                    }
                 }
-                var results: Population = []
-                for await genome in group {
-                    results.append(genome)
-                }
-                return results
-            }
             
-            //batch_
-            let batchFileName = "\(tempFilePrefix)\(batchIndex)"
-            let batchFileURL = tempDir.appendingPathComponent(batchFileName)
-            try! JSONEncoder().encode(batch).write(to: batchFileURL)
-            batchFiles.append(batchFileURL)
-            
-            if self.stopFlag {
-                
-                for url in batchFiles{
-                    try! fileManager.removeItem(at: url)
+                for await result in taskGroup {
+                    response.insert(result)
                 }
-                
-                self.subject.send(completion: .finished)
-                break
             }
-                        
-            subjectPop.send(.init(current: batchIndex + 1, total: numBatches))
-        }
-        
-        subjectPop.send(completion: .finished)
-        
-        
 
-        
-        return batchFiles
+           
+            
+            
+        return response
     }
     
     
@@ -253,236 +225,201 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
         self.stopFlag = true
     }
     
-    
-    //    public func runEvolution() {
-    //
-    //        self.stopFlag = false
-    //
-    //        var population = self.generatePopulation(size: populationSize, genome_lenght: modelArray.count)
-    //        population = sorted(population, key: { genome in
-    //            return try? self.fitness(genome: genome)
-    //        }, reverse: true)
-    //
-    //        var index = 0
-    //        let queue = DispatchQueue(label: "com.geneticalgorithm.evolution", attributes: .concurrent)
-    //        let group = DispatchGroup()
-    //        let lock = NSLock()
-    //
-    //
-    //
-    //        for i in 1...generationLimit {
-    //            index = i
-    //
-    //            self.subject.send(.init(generation: index, population: population))
-    //
-    //            do {
-    //                //Ordena a população do maior para o menor com base nos melhores - Elitismo
-    //                population = sorted(population, key: { genome in
-    //                    return try? self.fitness(genome: genome)
-    //                }, reverse: true)
-    //
-    //                //Se chegar naquele patamar, não precisa seguir em frente
-    //                if try self.fitness(genome: population[0]) >= fitnessLimit {
-    //                    self.subject.send(completion: .finished)
-    //                    break
-    //                }
-    //
-    //                var nextGeneration = Array(population[..<2])
-    //
-    //                for _ in 0..<population.count / 2 {
-    //                    group.enter()
-    //                    queue.async {
-    //                        defer { group.leave() }
-    //
-    //                        if let parents = try? self.selectionPair(population: population){
-    //
-    //                            if (!parents.isEmpty) {
-    //                                if let offSpring = try? self.selectionPointCrossOver(a: parents[0], b: parents[1]){
-    //
-    //                                    let offSpringAMutated = self.mutation(genome: offSpring.0)
-    //
-    //                                    let offSpringBMutated = self.mutation(genome: offSpring.1)
-    //
-    //                                    DispatchQueue.concurrentPerform(iterations: 2) { idx in
-    //                                        lock.lock()
-    //
-    //                                        if idx == 0 {
-    //                                            nextGeneration.append(offSpringAMutated)
-    //                                        } else {
-    //                                            nextGeneration.append(offSpringBMutated)
-    //                                        }
-    //                                        lock.unlock()
-    //                                    }
-    //                                }
-    //                            }
-    //                        }
-    //                    }
-    //
-    //                    group.wait()
-    //                    population = nextGeneration
-    //
-    //                    if self.stopFlag {
-    //                        self.subject.send(completion: .finished)
-    //                        return
-    //                    }
-    //                }
-    //
-    //            } catch let error {
-    //                self.subject.send(completion: .failure(error as! Never))
-    //            }
-    //
-    //            self.subject.send(.init(generation: index, population: population))
-    //
-    //            if self.stopFlag {
-    //                self.subject.send(completion: .finished)
-    //                return
-    //            }
-    //        }
-    //
-    //        self.subject.send(completion: .finished)
-    //    }
-    
-    
-    private func loadPopulationBatch(url: URL) -> Population{
-        
-        guard let batchData = try? Data(contentsOf: url) else { return [] }
-        let batch = try! JSONDecoder().decode(Population.self, from: batchData)
-            
-        return batch
-    }
-    
-    
-    private func saveBatch(url: URL, batch: Population){
-        
-        try! JSONEncoder().encode(batch).write(to: url)
-        
-    }
-    
+
     
     public func runEvolution() async {
         self.stopFlag = false
         
-        var populationURLS = await self.generatePopulation(size: populationSize, genomeLength: modelArray.count)
+        var population = await generatePopulation(size: self.populationSize, genomeLength: self.modelArray.count)
         
         
         
-       
-        
-        for i in 1...generationLimit {
-            
-            
-            if self.stopFlag {
-                
-                for url in populationURLS{
-                    try? fileManager.removeItem(at: url)
-                }
-                
-                self.subject.send(completion: .finished)
-                break
-            }
-            
-            index = i
-            
-            var population: Population = .init()
-            
-            
-            self.subject.send(.init(generation: 0, population: [(0...modelArray.count).map({ _ in
-                return 0
-            }) ]))
-
-            
-            await withTaskGroup(of: Population.self, body: { taskGroupOne in
-                
-                
-                for url in populationURLS{
-                    
-                    taskGroupOne.addTask{ [self] in
-                        
-                        var nextGeneration: Population = .init()
-                        
-                        nextGeneration = loadPopulationBatch(url: url)
-                        
-                        nextGeneration = sorted(nextGeneration, key: { genome in
-                            return self.fitness(genome: genome)
-                        }, reverse: true)
-                        
-                        
-                        await withTaskGroup(of: (Genome, Genome).self) { taskGroup in
-                            for parents in nextGeneration.arrayChunks(of: 2) {
-                                taskGroup.addTask {
-                                    
-                                    if  parents.count > 1 {
-                                        let offSpring = self.selectionPointCrossOver(a: parents[0], b: parents[1])
-                                        let offSpringAMutated = self.mutation(genome: offSpring.0)
-                                        let offSpringBMutated = self.mutation(genome: offSpring.1)
-                                        return (offSpringAMutated, offSpringBMutated)
-                                    }else{
-                                        
-                                        let offSpring = self.selectionPointCrossOver(a: parents[0], b: parents[0])
-                                        let offSpringAMutated = self.mutation(genome: offSpring.0)
-                                        let offSpringBMutated = self.mutation(genome: offSpring.1)
-                                        return (offSpringAMutated, offSpringBMutated)
-                                        
-                                    }
-                                    
-                                    
-                                }
-                            }
-                            
-                            for await result in taskGroup {
-                                let (offSpringAMutated, offSpringBMutated) = result
-                                //lock.lock()
-                                nextGeneration.append(offSpringAMutated)
-                                nextGeneration.append(offSpringBMutated)
-                                //lock.unlock()
-                                
-                            }
-                            
-                            
-                        }
-                        
-                        nextGeneration = sorted(nextGeneration, key: { genome in
-                            return self.fitness(genome: genome)
-                        }, reverse: true)
-                        
-                        
-                        saveBatch(url: url, batch: nextGeneration)
-                        
-                        let bestGenome = [nextGeneration[0]]
-                        
-                        nextGeneration.removeAll()
-                        
-                        return bestGenome
-                    }
-                    
-                    
-                    for await result in taskGroupOne {
-                        population += result
-                    }
-                    
-                    
-                    
-                }
-                
-                
-                population = sorted(population, key: { genome in
-                    return self.fitness(genome: genome)
-                }, reverse: true)
-                
-                self.subject.send(.init(generation: index, population: population))
-                
-                
-            })
-            
-            
-          
-            
-        }
+//        var index = 0
+//
+//        for i in 1...generationLimit {
+//            index = i
+//
+//            self.subject.send(.init(generation: index, population: population))
+//
+//            //Ordena a população do maior para o menor com base nos melhores - Elitismo
+//            population = population.sorted(by: { genome1, genome2 in
+//                return self.fitness(genome: genome1) > self.fitness(genome: genome2)
+//            })
+//
+//            //Se chegar naquele patamar, não precisa seguir em frente
+//            //                if self.fitness(genome: population[0]) >= fitnessLimit {
+//            //                    self.subject.send(completion: .finished)
+//            //                    return
+//            //                }
+//
+//            var nextGeneration = Set<Array<Int8>>()
+//
+//            let maxTasks = 100
+//            let pairsCount = population.count
+//            let batchSize = pairsCount / maxTasks
+//            let remainder = pairsCount % maxTasks
+//
+//            var startIndex = 0
+//
+//            for taskIndex in 0..<maxTasks {
+//
+//                let endIndex = startIndex + batchSize + (taskIndex < remainder ? 1 : 0)
+//
+//                let parentsBatch = population.sorted()[startIndex..<endIndex].map { $0 }
+//
+//                print("\n")
+//                print(startIndex, endIndex)
+//
+//                await withTaskGroup(of: (Genome, Genome).self) { taskGroup in
+//                    for parents in parentsBatch.arrayChunks(of: 2) {
+//                        taskGroup.addTask {
+//
+//                            if parents.count > 1 {
+//                                let offSpring = self.selectionPointCrossOver(a: parents[0], b: parents[1])
+//                                let offSpringAMutated = self.mutation(genome: offSpring.0)
+//                                let offSpringBMutated = self.mutation(genome: offSpring.1)
+//                                return (offSpringAMutated, offSpringBMutated)
+//                            } else {
+//                                let offSpring = self.selectionPointCrossOver(a: parents[0], b: parents[0])
+//                                let offSpringAMutated = self.mutation(genome: offSpring.0)
+//                                let offSpringBMutated = self.mutation(genome: offSpring.1)
+//                                return (offSpringAMutated, offSpringBMutated)
+//                            }
+//                        }
+//                    }
+//
+//                    for await result in taskGroup {
+//                        let (offSpringAMutated, offSpringBMutated) = result
+//                        nextGeneration.insert(offSpringAMutated)
+//                        nextGeneration.insert(offSpringBMutated)
+//                    }
+//                }
+//
+//                startIndex = endIndex
+//            }
+//
+//            population = nextGeneration
+//
+//            if self.stopFlag {
+//                self.subject.send(completion: .finished)
+//                return
+//            }
+//
+//            self.subject.send(.init(generation: index, population: population))
+//
+//            if self.stopFlag {
+//                self.subject.send(completion: .finished)
+//                return
+//            }
+//        }
         
         self.subject.send(completion: .finished)
     }
+
+
     
     
+//    public func runEvolution() async {
+//        self.stopFlag = false
+//
+//        var population = self.generatePopulation(size: populationSize, genomeLength: modelArray.count)
+//        population = sorted(population, key: { genome in
+//            return self.fitness(genome: genome)
+//        }, reverse: true)
+//
+//        var index = 0
+//
+//        for i in 1...generationLimit {
+//            index = i
+//
+//
+//
+//            self.subject.send(.init(generation: index, population: population))
+//
+//            do {
+//                //Ordena a população do maior para o menor com base nos melhores - Elitismo
+//                population = sorted(population, key: { genome in
+//                    return self.fitness(genome: genome)
+//                }, reverse: true)
+//
+//                //Se chegar naquele patamar, não precisa seguir em frente
+//                //                if self.fitness(genome: population[0]) >= fitnessLimit {
+//                //                    self.subject.send(completion: .finished)
+//                //                    return
+//                //                }
+//
+//                var nextGeneration = Array(population[..<0])
+//
+//                let maxTasks = 100
+//                let pairsCount = population.count
+//                let batchSize = pairsCount / maxTasks
+//                let remainder = pairsCount % maxTasks
+//
+//                var startIndex = 0
+//
+//                for taskIndex in 0..<maxTasks {
+//
+//                    let endIndex = startIndex + batchSize + (taskIndex < remainder ? 1 : 0)
+//
+//                    let parentsBatch = Array(population[startIndex..<endIndex])
+//
+//                    print("\n")
+//                    print(startIndex,endIndex )
+//
+//                    await withTaskGroup(of: (Genome, Genome).self) { taskGroup in
+//                        for parents in parentsBatch.arrayChunks(of: 2) {
+//                            taskGroup.addTask {
+//
+//                                if  parents.count > 1 {
+//                                    let offSpring = self.selectionPointCrossOver(a: parents[0], b: parents[1])
+//                                    let offSpringAMutated = self.mutation(genome: offSpring.0)
+//                                    let offSpringBMutated = self.mutation(genome: offSpring.1)
+//                                    return (offSpringAMutated, offSpringBMutated)
+//                                }else{
+//
+//                                    let offSpring = self.selectionPointCrossOver(a: parents[0], b: parents[0])
+//                                    let offSpringAMutated = self.mutation(genome: offSpring.0)
+//                                    let offSpringBMutated = self.mutation(genome: offSpring.1)
+//                                    return (offSpringAMutated, offSpringBMutated)
+//
+//                                }
+//
+//
+//                            }
+//                        }
+//
+//                        for await result in taskGroup {
+//                            let (offSpringAMutated, offSpringBMutated) = result
+//                            //lock.lock()
+//                            nextGeneration.append(offSpringAMutated)
+//                            nextGeneration.append(offSpringBMutated)
+//                            //lock.unlock()
+//
+//                        }
+//                    }
+//
+//                    startIndex = endIndex
+//                }
+//
+//                population = nextGeneration
+//
+//                if self.stopFlag {
+//                    self.subject.send(completion: .finished)
+//                    return
+//                }
+//
+//            }
+//
+//            self.subject.send(.init(generation: index, population: population))
+//
+//            if self.stopFlag {
+//                self.subject.send(completion: .finished)
+//                return
+//            }
+//        }
+//
+//        self.subject.send(completion: .finished)
+//    }
     
     
     
