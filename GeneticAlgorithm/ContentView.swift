@@ -99,7 +99,7 @@ struct ContentView: View {
         
         geneticAlg?.subjectPop
             .receive(on: DispatchQueue.main) //
-            .sink { [self] completion in
+            .sink { completion in
             switch completion{
             case .failure:
                 print("Deu problema")
@@ -150,8 +150,8 @@ struct ContentView: View {
                     }
                 }
                 if(self.response.isRunning){
-                    if(self.response.generation == -1){
-                        ProgressView("Gerando população (\(responsePop.total) indivíduos)", value: Double(responsePop.currrent), total: Double(responsePop.total)).padding()
+                    if(self.response.generation <= -1){
+                        ProgressView("Gerando população (\(responsePop.total) batches)", value: Double(responsePop.currrent), total: Double(responsePop.total)).padding()
                     }else{
                         ProgressView("Epoch \(response.generation) / 1000000000", value: Double(response.generation ), total: 1000000000.0).padding()
                     }
@@ -163,7 +163,7 @@ struct ContentView: View {
                         createOtherSink()
                         
                         self.response.isRunning = true
-                        self.response.generation = 0
+                        self.response.generation = -1
                         self.response.population = []
                         
                         Task {

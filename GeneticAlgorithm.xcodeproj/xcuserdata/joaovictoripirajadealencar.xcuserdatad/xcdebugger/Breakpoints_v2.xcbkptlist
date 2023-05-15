@@ -55,118 +55,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D9E0067F-BFF7-4D74-A79B-CD76454B8E4D"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "GeneticAlgorithm/GeneticAlgorithm.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "276"
-            endingLineNumber = "276"
-            landmarkName = "GeneticAlgorithm"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "183C7668-14B4-42B1-ADB0-F207D72E7BA4"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "GeneticAlgorithm/GeneticAlgorithm.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "337"
-            endingLineNumber = "337"
-            landmarkName = "GeneticAlgorithm"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  uuid = "183C7668-14B4-42B1-ADB0-F207D72E7BA4 - 9892af8e576b5a94"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "GeneticAlgorithm.GeneticAlgorithm.runEvolution() -&gt; ()"
-                  moduleName = "GeneticAlgorithm"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/joaovictoripirajadealencar/Desktop/GeneticAlgorithm/GeneticAlgorithm/GeneticAlgorithm.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "222"
-                  endingLineNumber = "222"
-                  offsetFromSymbolStart = "3592">
-               </Location>
-               <Location
-                  uuid = "183C7668-14B4-42B1-ADB0-F207D72E7BA4 - 9892af8e576b5a94"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "GeneticAlgorithm.GeneticAlgorithm.runEvolution() -&gt; ()"
-                  moduleName = "GeneticAlgorithm"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/joaovictoripirajadealencar/Desktop/GeneticAlgorithm/GeneticAlgorithm/GeneticAlgorithm.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "222"
-                  endingLineNumber = "222"
-                  offsetFromSymbolStart = "3604">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "5C236503-81FC-48A5-B2A8-0A05BDBEC5A6"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "GeneticAlgorithm/GeneticAlgorithm.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "342"
-            endingLineNumber = "342"
-            landmarkName = "GeneticAlgorithm"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  uuid = "5C236503-81FC-48A5-B2A8-0A05BDBEC5A6 - 9892af8e576b5a7f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "GeneticAlgorithm.GeneticAlgorithm.runEvolution() -&gt; ()"
-                  moduleName = "GeneticAlgorithm"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/joaovictoripirajadealencar/Desktop/GeneticAlgorithm/GeneticAlgorithm/GeneticAlgorithm.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "227"
-                  endingLineNumber = "227"
-                  offsetFromSymbolStart = "3700">
-               </Location>
-               <Location
-                  uuid = "5C236503-81FC-48A5-B2A8-0A05BDBEC5A6 - 9892af8e576b5a7f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "GeneticAlgorithm.GeneticAlgorithm.runEvolution() -&gt; ()"
-                  moduleName = "GeneticAlgorithm"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/joaovictoripirajadealencar/Desktop/GeneticAlgorithm/GeneticAlgorithm/GeneticAlgorithm.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "227"
-                  endingLineNumber = "227"
-                  offsetFromSymbolStart = "3712">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "FB657309-DE06-48A4-9C7E-B7BDFB87599B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -190,8 +78,8 @@
             filePath = "GeneticAlgorithm/GeneticAlgorithm.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
             landmarkName = "generateGenomes(lenght:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -199,94 +87,128 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C4397ABA-E34C-4B60-BE91-89894F4398B4"
+            uuid = "B3A6B7D9-8D04-4150-882C-105C971E0499"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GeneticAlgorithm/ContentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "B3A6B7D9-8D04-4150-882C-105C971E0499 - 3880b9bcd4d2e8f8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.List&lt;Swift.Never, SwiftUI.ForEach&lt;Swift.Array&lt;GeneticAlgorithm.Thing&gt;, Foundation.UUID, SwiftUI.HStack&lt;SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.Text&gt;, SwiftUI.Text, SwiftUI.Spacer, SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;)&gt;&gt;&gt;&gt;&gt;, Swift.Optional&lt;SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.disabled(Swift.Bool) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.disabled(Swift.Bool) -&gt; some&gt;&gt;.0)&gt;&gt;)&gt; in closure #1 () -&gt; SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(SwiftUI.List&lt;Swift.Never, SwiftUI.ForEach&lt;Swift.Array&lt;GeneticAlgorithm.Thing&gt;, Foundation.UUID, SwiftUI.HStack&lt;SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.Text&gt;, SwiftUI.Text, SwiftUI.Spacer, SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;)&gt;&gt;&gt;&gt;&gt;, Swift.Optional&lt;SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.disabled(Swift.Bool) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.disabled(Swift.Bool) -&gt; some&gt;&gt;.0)&gt;&gt;)&gt;&gt; in GeneticAlgorithm.ContentView.body.getter : some"
+                  moduleName = "GeneticAlgorithm"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/joaovictoripirajadealencar/Desktop/GeneticAlgorithm/Genetic-Algorithm-Swift/GeneticAlgorithm/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "153"
+                  endingLineNumber = "153"
+                  offsetFromSymbolStart = "1256">
+               </Location>
+               <Location
+                  uuid = "B3A6B7D9-8D04-4150-882C-105C971E0499 - 3880b9bcd4d2e8f8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.List&lt;Swift.Never, SwiftUI.ForEach&lt;Swift.Array&lt;GeneticAlgorithm.Thing&gt;, Foundation.UUID, SwiftUI.HStack&lt;SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.Text&gt;, SwiftUI.Text, SwiftUI.Spacer, SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;)&gt;&gt;&gt;&gt;&gt;, Swift.Optional&lt;SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.disabled(Swift.Bool) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.disabled(Swift.Bool) -&gt; some&gt;&gt;.0)&gt;&gt;)&gt; in closure #1 () -&gt; SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(SwiftUI.List&lt;Swift.Never, SwiftUI.ForEach&lt;Swift.Array&lt;GeneticAlgorithm.Thing&gt;, Foundation.UUID, SwiftUI.HStack&lt;SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.Text&gt;, SwiftUI.Text, SwiftUI.Spacer, SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;)&gt;&gt;&gt;&gt;&gt;, Swift.Optional&lt;SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.disabled(Swift.Bool) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.disabled(Swift.Bool) -&gt; some&gt;&gt;.0)&gt;&gt;)&gt;&gt; in GeneticAlgorithm.ContentView.body.getter : some"
+                  moduleName = "GeneticAlgorithm"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/joaovictoripirajadealencar/Desktop/GeneticAlgorithm/Genetic-Algorithm-Swift/GeneticAlgorithm/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "153"
+                  endingLineNumber = "153"
+                  offsetFromSymbolStart = "1992">
+               </Location>
+               <Location
+                  uuid = "B3A6B7D9-8D04-4150-882C-105C971E0499 - 3880b9bcd4d2e8f8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.List&lt;Swift.Never, SwiftUI.ForEach&lt;Swift.Array&lt;GeneticAlgorithm.Thing&gt;, Foundation.UUID, SwiftUI.HStack&lt;SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.Text&gt;, SwiftUI.Text, SwiftUI.Spacer, SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;)&gt;&gt;&gt;&gt;&gt;, Swift.Optional&lt;SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.disabled(Swift.Bool) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.disabled(Swift.Bool) -&gt; some&gt;&gt;.0)&gt;&gt;)&gt; in closure #1 () -&gt; SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(SwiftUI.List&lt;Swift.Never, SwiftUI.ForEach&lt;Swift.Array&lt;GeneticAlgorithm.Thing&gt;, Foundation.UUID, SwiftUI.HStack&lt;SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.Text&gt;, SwiftUI.Text, SwiftUI.Spacer, SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text)&gt;&gt;)&gt;&gt;&gt;&gt;&gt;, Swift.Optional&lt;SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.disabled(Swift.Bool) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.disabled(Swift.Bool) -&gt; some&gt;&gt;.0)&gt;&gt;)&gt;&gt; in GeneticAlgorithm.ContentView.body.getter : some"
+                  moduleName = "GeneticAlgorithm"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/joaovictoripirajadealencar/Desktop/GeneticAlgorithm/Genetic-Algorithm-Swift/GeneticAlgorithm/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "153"
+                  endingLineNumber = "153"
+                  offsetFromSymbolStart = "1996">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "585B08DE-4CDE-467F-A2A7-A2404EDC6393"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GeneticAlgorithm/GeneticAlgorithm.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "409"
-            endingLineNumber = "409"
+            startingLineNumber = "348"
+            endingLineNumber = "348"
             landmarkName = "runEvolution()"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "C4397ABA-E34C-4B60-BE91-89894F4398B4 - 5a3e0bfdfc245359"
+                  uuid = "585B08DE-4CDE-467F-A2A7-A2404EDC6393 - 88ed802eb61d6eb"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; Swift.Array&lt;Swift.Array&lt;Swift.Int8&gt;&gt; in closure #1 (inout Swift.TaskGroup&lt;Swift.Array&lt;Swift.Array&lt;Swift.Int8&gt;&gt;&gt;) async -&gt; () in GeneticAlgorithm.GeneticAlgorithm.runEvolution() async -&gt; ()"
+                  symbolName = "(3) suspend resume partial function for GeneticAlgorithm.GeneticAlgorithm.runEvolution() async -&gt; ()"
                   moduleName = "GeneticAlgorithm"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/joaovictoripirajadealencar/Desktop/GeneticAlgorithm/GeneticAlgorithm/GeneticAlgorithm.swift"
+                  urlString = "file:///Users/joaovictoripirajadealencar/Desktop/GeneticAlgorithm/Genetic-Algorithm-Swift/GeneticAlgorithm/GeneticAlgorithm.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "360"
-                  endingLineNumber = "360"
-                  offsetFromSymbolStart = "280">
+                  startingLineNumber = "467"
+                  endingLineNumber = "467"
+                  offsetFromSymbolStart = "236">
                </Location>
                <Location
-                  uuid = "C4397ABA-E34C-4B60-BE91-89894F4398B4 - c9273600b910426"
+                  uuid = "585B08DE-4CDE-467F-A2A7-A2404EDC6393 - 88ed802eb61d6eb"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(2) await resume partial function for closure #1 @Sendable () async -&gt; Swift.Array&lt;Swift.Array&lt;Swift.Int8&gt;&gt; in closure #1 (inout Swift.TaskGroup&lt;Swift.Array&lt;Swift.Array&lt;Swift.Int8&gt;&gt;&gt;) async -&gt; () in GeneticAlgorithm.GeneticAlgorithm.runEvolution() async -&gt; ()"
+                  symbolName = "(3) suspend resume partial function for GeneticAlgorithm.GeneticAlgorithm.runEvolution() async -&gt; ()"
                   moduleName = "GeneticAlgorithm"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/joaovictoripirajadealencar/Desktop/GeneticAlgorithm/GeneticAlgorithm/GeneticAlgorithm.swift"
+                  urlString = "file:///Users/joaovictoripirajadealencar/Desktop/GeneticAlgorithm/Genetic-Algorithm-Swift/GeneticAlgorithm/GeneticAlgorithm.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "360"
-                  endingLineNumber = "360"
-                  offsetFromSymbolStart = "40">
-               </Location>
-               <Location
-                  uuid = "C4397ABA-E34C-4B60-BE91-89894F4398B4 - 14968c6c5b2616a7"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async -&gt; Swift.Array&lt;Swift.Array&lt;Swift.Int8&gt;&gt; in closure #1 (inout Swift.TaskGroup&lt;Swift.Array&lt;Swift.Array&lt;Swift.Int8&gt;&gt;&gt;) async -&gt; () in GeneticAlgorithm.GeneticAlgorithm.runEvolution() async -&gt; ()"
-                  moduleName = "GeneticAlgorithm"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/joaovictoripirajadealencar/Desktop/GeneticAlgorithm/GeneticAlgorithm/GeneticAlgorithm.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "360"
-                  endingLineNumber = "360"
-                  offsetFromSymbolStart = "52">
-               </Location>
-               <Location
-                  uuid = "C4397ABA-E34C-4B60-BE91-89894F4398B4 - e61f4bfbcea3b426"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (inout Swift.TaskGroup&lt;(Swift.Array&lt;Swift.Int8&gt;, Swift.Array&lt;Swift.Int8&gt;)&gt;) async -&gt; () in closure #1 @Sendable () async -&gt; Swift.Array&lt;Swift.Array&lt;Swift.Int8&gt;&gt; in closure #1 (inout Swift.TaskGroup&lt;Swift.Array&lt;Swift.Array&lt;Swift.Int8&gt;&gt;&gt;) async -&gt; () in GeneticAlgorithm.GeneticAlgorithm.runEvolution() async -&gt; ()"
-                  moduleName = "GeneticAlgorithm"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/joaovictoripirajadealencar/Desktop/GeneticAlgorithm/GeneticAlgorithm/GeneticAlgorithm.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "360"
-                  endingLineNumber = "360"
-                  offsetFromSymbolStart = "248">
-               </Location>
-               <Location
-                  uuid = "C4397ABA-E34C-4B60-BE91-89894F4398B4 - 1dc2146e7dde9a3"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for closure #2 (inout Swift.TaskGroup&lt;(Swift.Array&lt;Swift.Int8&gt;, Swift.Array&lt;Swift.Int8&gt;)&gt;) async -&gt; () in closure #1 @Sendable () async -&gt; Swift.Array&lt;Swift.Array&lt;Swift.Int8&gt;&gt; in closure #1 (inout Swift.TaskGroup&lt;Swift.Array&lt;Swift.Array&lt;Swift.Int8&gt;&gt;&gt;) async -&gt; () in GeneticAlgorithm.GeneticAlgorithm.runEvolution() async -&gt; ()"
-                  moduleName = "GeneticAlgorithm"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/joaovictoripirajadealencar/Desktop/GeneticAlgorithm/GeneticAlgorithm/GeneticAlgorithm.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "360"
-                  endingLineNumber = "360"
-                  offsetFromSymbolStart = "76">
+                  startingLineNumber = "467"
+                  endingLineNumber = "467"
+                  offsetFromSymbolStart = "208">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "78FB5CA3-72D0-4B0F-A7FF-6503405C01C9"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GeneticAlgorithm/GeneticAlgorithm.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "314"
+            endingLineNumber = "314"
+            landmarkName = "loadPopulationBatch(offSet:size:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
