@@ -30,7 +30,7 @@ func bigToBatches<INPUT>(size: Int, content: @escaping () -> INPUT, completion: 
                 results.append(genome)
             }
             
-            completion(results, .init(current: batchIndex + 1, total: size))
+            completion(results, .init(current: (batchIndex + 1)*batchSize, total: size))
             
         }
     }
