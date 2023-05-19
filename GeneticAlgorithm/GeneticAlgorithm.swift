@@ -11,11 +11,6 @@ import SwiftUI
 
 
 
-protocol GeneticAlgorithmProtocol{
-    func generateGenome(lengh: Int) -> Genome
-    func generatePopulation(size: Int, genomeLength: Int) async
-    func fitness()
-}
 
 class GeneticAlgorithm<V: Numeric & Comparable,T>{
     
@@ -80,6 +75,7 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
         
         print("Finished")
         subjectPop.send(completion: .finished)
+        subject.send(.init(generation: 0, population: []))
         
     }
     
@@ -180,9 +176,12 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
                                 return self.fitness(genome: genome)
                             }, reverse: true)
                             
+                            //print(nextGeneration.count)
                             
                             await withTaskGroup(of: (Genome, Genome).self) { taskGroup in
-                                for parents in (0...nextGeneration.count).map({ _ in return selectionPair(population: nextGeneration)}) {
+                                for parents in nextGeneration.arrayChunks(of: 2){
+                                    
+                                    print(parents.count)
                                     taskGroup.addTask {
                                         
                                         if  parents.count > 1 {
@@ -191,7 +190,11 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
                                             let offSpringBMutated = self.mutation(genome: offSpring.1)
                                             return (offSpringAMutated, offSpringBMutated)
                                         }else{
-                                            return ([], [])
+                                            
+                                            let offSpring = self.selectionPointCrossOver(a: parents[0], b: parents[0])
+                                            let offSpringAMutated = self.mutation(genome: offSpring.0)
+                                            let offSpringBMutated = self.mutation(genome: offSpring.1)
+                                            return (offSpringAMutated, offSpringBMutated)
                                             
                                         }
                                         

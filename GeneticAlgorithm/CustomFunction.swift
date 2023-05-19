@@ -12,7 +12,7 @@ import Foundation
 public func weightedRandomChoice<T, W: Numeric & Comparable >(sequence: [T], weights: [W], k: Int) -> [T] {
     var results = [T]()
     let totalWeight = weights.reduce(0.0) {$0 + Double($1 as! NSNumber)}
-    for _ in 0..<k {
+    for _ in 0...k {
         let randomValue = Double(arc4random_uniform(UInt32.max)) / Double(UInt32.max)
         var cumulativeWeight: Double = 0.0
         for (index, element) in sequence.enumerated() {

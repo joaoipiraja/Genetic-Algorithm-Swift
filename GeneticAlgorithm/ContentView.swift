@@ -38,20 +38,20 @@ struct ContentView: View {
         ]
         
         
-        self.geneticAlg = .init(modelArray: things, populationSize: 2900000, generationLimit: 100000000, genomeInterval: 0...10, fitnessLimit: Float(1000000000000), evaluationFunction: { [self] genome in
+        self.geneticAlg = .init(modelArray: things, populationSize: 290000, generationLimit: 100000000, genomeInterval: 0...10, fitnessLimit: Float(1000000000000), evaluationFunction: { [self] genome in
             
             var weight:Float = 0
             var value:Float = 0
             
             for (i, thing) in things.enumerated(){
-                
+                    
                     weight += Float(genome[i])*thing.weight
                     value += Float(genome[i])*thing.value
                     
                     if weight > 1000{
                         return 0.0
                     }
-  
+         
             }
             
             return value
