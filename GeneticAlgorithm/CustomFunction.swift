@@ -59,8 +59,7 @@ extension Array{
 
 
 }
-<<<<<<< Updated upstream
-=======
+
 
 extension Data {
 
@@ -75,4 +74,3 @@ extension Data {
 
 
 
->>>>>>> Stashed changes

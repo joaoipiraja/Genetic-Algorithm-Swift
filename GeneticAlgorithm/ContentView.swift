@@ -38,7 +38,7 @@ struct ContentView: View {
         ]
         
         
-        self.geneticAlg = .init(modelArray: things, populationSize: 29000000, generationLimit: 100000000, genomeInterval: 0...10, fitnessLimit: Float(1000000000000), evaluationFunction: { [self] genome in
+        self.geneticAlg = .init(modelArray: things, populationSize: 2900000, generationLimit: 100000000, genomeInterval: 0...10, fitnessLimit: Float(1000000000000), evaluationFunction: { [self] genome in
             
             var weight:Float = 0
             var value:Float = 0
@@ -79,7 +79,7 @@ struct ContentView: View {
             }
                 
         } receiveValue: { [self] value in
-       
+           // print( value.generation)
             self.response.generation = value.generation
             self.response.population = value.population
             
@@ -142,13 +142,9 @@ struct ContentView: View {
                     }
                 }
                 if(self.response.isRunning){
-<<<<<<< Updated upstream
                     if(self.response.generation == -1){
                         ProgressView("Gerando população (\(responsePop.total) indivíduos)", value: Double(responsePop.currrent), total: Double(responsePop.total)).padding()
-=======
-                    if(self.response.generation <= -1){
-                        ProgressView("Gerando população (\(responsePop.total))", value: Double(responsePop.currrent), total: Double(responsePop.total)).padding()
->>>>>>> Stashed changes
+
                     }else{
                         ProgressView("Epoch \(response.generation) / 1000000000", value: Double(response.generation ), total: 1000000000.0).padding()
                     }
@@ -160,7 +156,7 @@ struct ContentView: View {
                         createOtherSink()
                         
                         self.response.isRunning = true
-                        self.response.generation = 0
+                        self.response.generation = -1
                         self.response.population = []
                         
                         Task {
