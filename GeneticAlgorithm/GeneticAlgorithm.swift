@@ -11,7 +11,11 @@ import SwiftUI
 
 
 
-
+protocol GeneticAlgorithmProtocol{
+    func generateGenome(lengh: Int) -> Genome
+    func generatePopulation(size: Int, genomeLength: Int) async
+    func fitness()
+}
 
 class GeneticAlgorithm<V: Numeric & Comparable,T>{
     
@@ -44,6 +48,7 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
     
     
     private func generateGenomes(lenght: Int) -> Genome{
+        
         return (0..<lenght).map({ _ in
             return Cromossome.random(in: genomeInterval)
         })
@@ -177,7 +182,7 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
                             
                             
                             await withTaskGroup(of: (Genome, Genome).self) { taskGroup in
-                                for parents in nextGeneration.arrayChunks(of: 2) {
+                                for parents in (0...nextGeneration.count).map({ _ in return selectionPair(population: nextGeneration)}) {
                                     taskGroup.addTask {
                                         
                                         if  parents.count > 1 {
@@ -186,11 +191,7 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
                                             let offSpringBMutated = self.mutation(genome: offSpring.1)
                                             return (offSpringAMutated, offSpringBMutated)
                                         }else{
-                                            
-                                            let offSpring = self.selectionPointCrossOver(a: parents[0], b: parents[0])
-                                            let offSpringAMutated = self.mutation(genome: offSpring.0)
-                                            let offSpringBMutated = self.mutation(genome: offSpring.1)
-                                            return (offSpringAMutated, offSpringBMutated)
+                                            return ([], [])
                                             
                                         }
                                         

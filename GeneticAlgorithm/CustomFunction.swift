@@ -47,17 +47,21 @@ public func sorted<T, V: Comparable>(_ iterable: [T], key: @escaping (T) -> V?, 
 }
 
 
+
 extension Array{
+    
+//    func generateInterval<T>(ofSize size: Int, content: () -> T) -> Array<T> {
+//        return (0...size).map { _ in
+//            return content()
+//        }
+//    }
+    
     func arrayChunks(of chunkSize: Int) -> [[Element]] {
         return stride(from: 0, to: self.count, by: chunkSize).map { startIndex in
             let endIndex = Swift.min(startIndex + chunkSize, self.count)
             return Array(self[startIndex..<endIndex])
         }
     }
-    
-
-
-
 }
 
 

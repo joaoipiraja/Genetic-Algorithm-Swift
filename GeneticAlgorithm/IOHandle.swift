@@ -53,7 +53,6 @@ class IOOperation{
         
         self.offsetsSaved = []
 
-        self.fileHandle = try! FileHandle(forUpdating: self.url)
 
         if fileManager.fileExists(atPath: url.path()) {
             do {
@@ -65,6 +64,9 @@ class IOOperation{
         }
 
         fileManager.createFile(atPath: url.path(), contents: nil, attributes: nil)
+        
+        self.fileHandle = try! FileHandle(forUpdating: self.url)
+
     }
     
     func save(data: any DataProtocol){
