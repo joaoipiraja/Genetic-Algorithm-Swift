@@ -11,43 +11,7 @@ import SwiftUI
 
 
 
-typealias Cromossome = Int8
-typealias Genome = Array<Cromossome>
-typealias Population = Array<Genome>
 
-
-class Response: ObservableObject{
-    
-    @Published var generation: Int
-    @Published var population: Population
-    @Published var isRunning: Bool
-    
-    init(generation: Int, population: Population, isRunning: Bool = false) {
-        
-        self.generation = generation
-        self.population = population
-        self.isRunning = isRunning
-    }
-    
-}
-
-class ResponsePopulation: ObservableObject{
-    
-    @Published var currrent: Int
-    @Published var total: Int
-    
-    init(current: Int, total: Int) {
-        
-        self.currrent = current
-        self.total = total
-    }
-    
-}
-
-
-class Configuration: ObservableObject{
-    
-}
 
 class GeneticAlgorithm<V: Numeric & Comparable,T>{
     
@@ -63,12 +27,18 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
     var fitnessLimit: V
     var evaluationFunction: (Genome) -> (V)
     var genomeInterval: ClosedRange<Cromossome>
+    
+    var ioOperaation: IOOperation = .init()
     private var stopFlag: Bool = false
+<<<<<<< Updated upstream
     let fileManager = FileManager.default
     private var index = 0
     
     
     
+=======
+  
+>>>>>>> Stashed changes
     public init(modelArray: Array<T>, populationSize: Int, generationLimit: Int, genomeInterval: ClosedRange<Cromossome>, fitnessLimit: V, evaluationFunction: @escaping (Genome) ->  (V)) {
         self.modelArray = modelArray
         self.populationSize = populationSize
@@ -76,19 +46,19 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
         self.fitnessLimit = fitnessLimit
         self.evaluationFunction = evaluationFunction
         self.genomeInterval = genomeInterval
+<<<<<<< Updated upstream
+=======
+    
+>>>>>>> Stashed changes
     }
     
-    
-    
-    
-    /// Gerar genomas aleatórios de acordo com um intervalo de cromossomos
-    /// - Parameter lenght: tamanho
-    /// - Returns: array de inteiros randômicos num intervalo de cromossomos
+
     private func generateGenomes(lenght: Int) -> Genome{
         return (0..<lenght).map({ _ in
             return Cromossome.random(in: genomeInterval)
         })
     }
+<<<<<<< Updated upstream
     
     
     /// Description
@@ -170,10 +140,32 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
                 
                 self.subject.send(completion: .finished)
                 break
+=======
+  
+    private func generatePopulation(size: Int, genomeLength: Int) async{
+        
+        let separator: Character = "\n"
+            
+        
+        await bigToBatches(size: size) {
+            return self.generateGenomes(lenght: genomeLength)
+        } completion: { [self] (population, info) in
+            
+            let data = try! JSONEncoder().encode(population) + String(separator).data(using: .utf8)!
+              
+            self.ioOperaation.save(data: data)
+            
+            self.subjectPop.send(info)
+            
+            if self.stopFlag {
+                self.ioOperaation.close()
+                self.subject.send(completion: .finished)
+>>>>>>> Stashed changes
             }
                         
             subjectPop.send(.init(current: batchIndex + 1, total: numBatches))
         }
+<<<<<<< Updated upstream
         
         subjectPop.send(completion: .finished)
         
@@ -189,18 +181,19 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
     
     
     
+=======
+        
+        
+        subjectPop.send(completion: .finished)
+        self.subject.send(.init(generation: 0, population: []))
+
+    }
+
+>>>>>>> Stashed changes
     private func fitness(genome: Genome) -> V {
-        
-        //        if genome.count != modelArray.count{
-        //            throw GeneticAlgorithError.differentLenghts
-        //        }
-        
         return evaluationFunction(genome)
     }
-    
-    /// <#Description#>
-    /// - Parameter population: <#population description#>
-    /// - Returns: <#description#>
+
     private func selectionPair(population: Population)  -> Population{
         
         let weights: Array<V> = population.map({ gene in
@@ -214,12 +207,7 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
         )
         
     }
-    
-    /// <#Description#>
-    /// - Parameters:
-    ///   - a: <#a description#>
-    ///   - b: <#b description#>
-    /// - Returns: <#description#>
+ 
     func selectionPointCrossOver(a: Genome, b: Genome) -> (Genome,Genome){
         
         let lengh = a.count
@@ -249,11 +237,12 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
     }
     
     
-    public func stopEvolution() {
+    func stopEvolution() {
         self.stopFlag = true
     }
     
     
+<<<<<<< Updated upstream
     //    public func runEvolution() {
     //
     //        self.stopFlag = false
@@ -359,12 +348,23 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
     }
     
     
+=======
+
+>>>>>>> Stashed changes
     public func runEvolution() async {
+        
+        
         self.stopFlag = false
+<<<<<<< Updated upstream
         
         var populationURLS = await self.generatePopulation(size: populationSize, genomeLength: modelArray.count)
+=======
+        self.ioOperaation.open()
+>>>>>>> Stashed changes
         
+       await generatePopulation(size: self.populationSize ,genomeLength: self.modelArray.count)
         
+<<<<<<< Updated upstream
         
        
         
@@ -379,6 +379,113 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
                 
                 self.subject.send(completion: .finished)
                 break
+=======
+        for i in 1...generationLimit {
+
+                var population: Population = .init()
+
+
+                if self.stopFlag {
+
+
+                    self.subject.send(completion: .finished)
+                    self.ioOperaation.close()
+                    population = []
+                    break
+                }
+
+
+                await withTaskGroup(of: Population.self, body: { taskGroupOne in
+                    
+
+                    for i in 0..<ioOperaation.offsetsSaved.count {
+
+
+                        taskGroupOne.addTask{ [self] in
+                            
+                           
+                            
+                            var nextGeneration =   self.ioOperaation.read(at: i)
+                                
+                            nextGeneration = sorted(nextGeneration, key: { genome in
+                                return self.fitness(genome: genome)
+                            }, reverse: true)
+                            
+                            
+                            await withTaskGroup(of: (Genome, Genome).self) { taskGroup in
+                                for parents in nextGeneration.arrayChunks(of: 2) {
+                                    taskGroup.addTask {
+                                        
+                                        if  parents.count > 1 {
+                                            let offSpring = self.selectionPointCrossOver(a: parents[0], b: parents[1])
+                                            let offSpringAMutated = self.mutation(genome: offSpring.0)
+                                            let offSpringBMutated = self.mutation(genome: offSpring.1)
+                                            return (offSpringAMutated, offSpringBMutated)
+                                        }else{
+                                            
+                                            let offSpring = self.selectionPointCrossOver(a: parents[0], b: parents[0])
+                                            let offSpringAMutated = self.mutation(genome: offSpring.0)
+                                            let offSpringBMutated = self.mutation(genome: offSpring.1)
+                                            return (offSpringAMutated, offSpringBMutated)
+                                            
+                                        }
+                                        
+                                        
+                                    }
+                                }
+                                
+                                for await result in taskGroup {
+                                    let (offSpringAMutated, offSpringBMutated) = result
+                                    
+                                    nextGeneration.append(offSpringAMutated)
+                                    nextGeneration.append(offSpringBMutated)
+                                    
+                                }
+                                
+                                
+                            }
+                            
+                            nextGeneration = sorted(nextGeneration, key: { genome in
+                                return self.fitness(genome: genome)
+                            }, reverse: true)
+   
+
+                            return nextGeneration
+                        }
+                        
+                        
+                       
+                        
+                        for await result in taskGroupOne {
+                            
+                            
+                            if(!result.isEmpty){
+                                population += [result[0]]
+
+                            }
+                            
+                            
+                        }
+                
+
+                    }
+
+
+                    population = sorted(population, key: { genome in
+                        return self.fitness(genome: genome)
+                    }, reverse: true)
+
+
+                    
+                    self.subject.send(.init(generation: i, population: population))
+
+
+                })
+
+
+
+
+>>>>>>> Stashed changes
             }
             
             index = i
@@ -390,6 +497,7 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
                 return 0
             }) ]))
 
+<<<<<<< Updated upstream
             
             await withTaskGroup(of: Population.self, body: { taskGroupOne in
                 
@@ -479,6 +587,10 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
             
         }
         
+=======
+
+        self.ioOperaation.close()
+>>>>>>> Stashed changes
         self.subject.send(completion: .finished)
     }
     

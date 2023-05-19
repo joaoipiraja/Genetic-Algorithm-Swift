@@ -38,7 +38,7 @@ struct ContentView: View {
         ]
         
         
-        self.geneticAlg = .init(modelArray: things, populationSize: 10000000, generationLimit: 1000000000, genomeInterval: 0...10, fitnessLimit: Float(1000000000000), evaluationFunction: { [self] genome in
+        self.geneticAlg = .init(modelArray: things, populationSize: 29000000, generationLimit: 100000000, genomeInterval: 0...10, fitnessLimit: Float(1000000000000), evaluationFunction: { [self] genome in
             
             var weight:Float = 0
             var value:Float = 0
@@ -49,21 +49,13 @@ struct ContentView: View {
                     value += Float(genome[i])*thing.value
                     
                     if weight > 1000{
-                        //atribui peso 0 quando maior que 1000
                         return 0.0
                     }
-                
-               
-                
+  
             }
             
             return value
         })
-        
-       
-        
-        
-       
 
         
     }
@@ -150,8 +142,13 @@ struct ContentView: View {
                     }
                 }
                 if(self.response.isRunning){
+<<<<<<< Updated upstream
                     if(self.response.generation == -1){
                         ProgressView("Gerando população (\(responsePop.total) indivíduos)", value: Double(responsePop.currrent), total: Double(responsePop.total)).padding()
+=======
+                    if(self.response.generation <= -1){
+                        ProgressView("Gerando população (\(responsePop.total))", value: Double(responsePop.currrent), total: Double(responsePop.total)).padding()
+>>>>>>> Stashed changes
                     }else{
                         ProgressView("Epoch \(response.generation) / 1000000000", value: Double(response.generation ), total: 1000000000.0).padding()
                     }
