@@ -60,9 +60,7 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
         } completion: { [self] (population, info) in
             
             let data = try! JSONEncoder().encode(population) + String(separator).data(using: .utf8)!
-            
             self.ioOperaation.save(data: data)
-            
             self.subjectPop.send(info)
             
             if self.stopFlag {
@@ -83,7 +81,7 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
     
     
     
-    
+    //Seleção Artificial
     private func fitness(genome: Genome) -> V {
         return evaluationFunction(genome)
     }
@@ -176,7 +174,6 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
                                 return self.fitness(genome: genome)
                             }, reverse: true)
                             
-                            //print(nextGeneration.count)
                             
                             await withTaskGroup(of: (Genome, Genome).self) { taskGroup in
                                 for parents in nextGeneration.arrayChunks(of: 2){
@@ -190,6 +187,8 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
                                             let offSpringBMutated = self.mutation(genome: offSpring.1)
                                             return (offSpringAMutated, offSpringBMutated)
                                         }else{
+                                            
+                                            //AutoFecundação
                                             
                                             let offSpring = self.selectionPointCrossOver(a: parents[0], b: parents[0])
                                             let offSpringAMutated = self.mutation(genome: offSpring.0)
@@ -213,6 +212,7 @@ class GeneticAlgorithm<V: Numeric & Comparable,T>{
                                 
                             }
                             
+                            //elitismo
                             nextGeneration = sorted(nextGeneration, key: { genome in
                                 return self.fitness(genome: genome)
                             }, reverse: true)

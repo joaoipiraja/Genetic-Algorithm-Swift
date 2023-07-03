@@ -42,7 +42,19 @@ class IOOperation{
         let tempDir = fileManager.temporaryDirectory
         let tempFileName = "populations.json"
         self.url =  tempDir.appendingPathComponent(tempFileName)
+        
+        if fileManager.fileExists(atPath: url.path()) {
+            do {
+                try fileManager.removeItem(atPath: url.path())
+                print("File deleted successfully.")
+            } catch {
+                print("Error deleting file: \(error)")
+            }
+        }
 
+        fileManager.createFile(atPath: url.path(), contents: nil, attributes: nil)
+        
+        
         self.fileHandle = try! FileHandle(forUpdating: self.url)
         self.offsetsSaved = []
 

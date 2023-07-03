@@ -38,7 +38,7 @@ struct ContentView: View {
         ]
         
         
-        self.geneticAlg = .init(modelArray: things, populationSize: 290000, generationLimit: 100000000, genomeInterval: 0...10, fitnessLimit: Float(1000000000000), evaluationFunction: { [self] genome in
+        self.geneticAlg = .init(modelArray: things, populationSize: 2900000, generationLimit: 100000000, genomeInterval: 0...10, fitnessLimit: Float(1000000000000), evaluationFunction: { [self] genome in
             
             var weight:Float = 0
             var value:Float = 0
@@ -115,70 +115,73 @@ struct ContentView: View {
     
     
     var body: some View {
-        VStack {
-            
-            VStack{
-                List(things, id: \.id){ thing in
-                    HStack{
-                        
+        
+        ZStack{
+       
+            VStack {
+                
+                VStack{
+                    List(things, id: \.id){ thing in
                         HStack{
-                         
-                           if !self.response.population.isEmpty{
-                            Text("\(self.response.population[0] [self.things.firstIndex(where: {return $0.id == thing.id})!])").font(Font.system(.title2, design: .default))
-                                   .fontWeight(.bold)
-                           }
-                            Text(thing.name).font(Font.system(.title2, design: .default))
-                                .fontWeight(.regular)
-                            Spacer()
-                            VStack(alignment: .trailing){
-                                Text(String(format: "%.2f g",thing.weight))
-                                Text(String(format: "R$ %.2f",thing.value))
+                            
+                            HStack{
+                                
+                                if !self.response.population.isEmpty{
+                                    Text("\(self.response.population[0] [self.things.firstIndex(where: {return $0.id == thing.id})!])").font(Font.system(.title2, design: .default))
+                                        .fontWeight(.bold)
+                                }
+                                Text(thing.name).font(Font.system(.title2, design: .default))
+                                    .fontWeight(.regular)
+                                Spacer()
+                                VStack(alignment: .trailing){
+                                    Text(String(format: "%.2f g",thing.weight))
+                                    Text(String(format: "R$ %.2f",thing.value))
+                                }
+                                
+                                
+                            }
+          
+                        }
+                    }.background(Color(cgColor: .init(red: 250, green: 246, blue: 246, alpha: 1.0)))
+                  
+                    if(self.response.isRunning){
+                        if(self.response.generation == -1){
+                            ProgressView("Gerando população (\(responsePop.total) indivíduos)", value: Double(responsePop.currrent), total: Double(responsePop.total)).padding()
+                            
+                        }else{
+                            ProgressView("Epoch \(response.generation) / 1000000000", value: Double(response.generation ), total: 1000000000.0).padding()
+                        }
+                        
+                    }
+                    
+                    HStack{
+                        Button("Rodar") {
+                            createOtherSink()
+                            
+                            self.response.isRunning = true
+                            self.response.generation = -1
+                            self.response.population = []
+                            
+                            Task {
+                                await geneticAlg?.runEvolution()
                             }
                             
+                        }.disabled(self.response.isRunning)
+                        
+                        Button("Parar") {
+                            self.response.isRunning = false
+                            geneticAlg?.stopEvolution()
                             
-                        }
-                        
-                        
+                        }.disabled(!self.response.isRunning)
                     }
-                }
-                if(self.response.isRunning){
-                    if(self.response.generation == -1){
-                        ProgressView("Gerando população (\(responsePop.total) indivíduos)", value: Double(responsePop.currrent), total: Double(responsePop.total)).padding()
-
-                    }else{
-                        ProgressView("Epoch \(response.generation) / 1000000000", value: Double(response.generation ), total: 1000000000.0).padding()
-                    }
-                   
+                    
+                    
                 }
                 
-                HStack{
-                    Button("Rodar") {
-                        createOtherSink()
-                        
-                        self.response.isRunning = true
-                        self.response.generation = -1
-                        self.response.population = []
-                        
-                        Task {
-                           await geneticAlg?.runEvolution()
-                        }
-                        
-                    }.disabled(self.response.isRunning)
-                    
-                    Button("Parar") {
-                        self.response.isRunning = false
-                        geneticAlg?.stopEvolution()
-                 
-                    }.disabled(!self.response.isRunning)
-                }
-              
-
+                
             }
-                        
             
         }
-     
-      
     }
     
 }
