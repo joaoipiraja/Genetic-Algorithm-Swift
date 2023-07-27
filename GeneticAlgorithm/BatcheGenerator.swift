@@ -8,8 +8,8 @@
 import Foundation
 
 
-func bigToBatches<INPUT>(size: Int, content: @escaping () -> INPUT, completion: @escaping (Array<INPUT>, ResponsePopulation) -> ()) async{
-    let batchSize = 10000
+func bigToBatches<INPUT>(size: Int, content: @escaping () -> INPUT, completion: @escaping (Array<INPUT>, ResponsePopulation) async  -> ()) async{
+    let batchSize = 100
     let numBatches = Int(ceil(Double(size) / Double(batchSize)))
     
     for batchIndex in 0..<numBatches {
@@ -21,7 +21,7 @@ func bigToBatches<INPUT>(size: Int, content: @escaping () -> INPUT, completion: 
 
         await withTaskGroup(of: INPUT.self) { group -> () in
             for _ in 0..<batchCount {
-                group.addTask { await content()}
+                group.addTask { content()}
             
             }
             
@@ -30,7 +30,7 @@ func bigToBatches<INPUT>(size: Int, content: @escaping () -> INPUT, completion: 
                 results.append(genome)
             }
             
-            completion(results, .init(current: (batchIndex + 1)*batchSize, total: size))
+            await completion(results, .init(current: (batchIndex + 1)*batchSize, total: size))
             
         }
     }

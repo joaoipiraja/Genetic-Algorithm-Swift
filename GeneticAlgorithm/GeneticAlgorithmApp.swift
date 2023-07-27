@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct GeneticAlgorithmApp: App {
+    
+    @StateObject var thingsViewModel: ThingViewModel = .init()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environmentObject(thingsViewModel)
         }
     }
 }

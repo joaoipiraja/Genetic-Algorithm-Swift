@@ -7,11 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E39F3DF2A71C57300504789 /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E39F3DE2A71C57300504789 /* Query.swift */; };
+		4E39F3E12A71C78B00504789 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E39F3E02A71C78B00504789 /* Protocol.swift */; };
+		4E39F3E32A71CB0800504789 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E39F3E22A71CB0800504789 /* DataController.swift */; };
+		4E39F3E52A71CB3200504789 /* CoreDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E39F3E42A71CB3200504789 /* CoreDataError.swift */; };
+		4E39F3E72A71E34400504789 /* CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E39F3E62A71E34400504789 /* CloudKit.swift */; };
 		4E44FC092A1722D100C2B94A /* BatcheGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E44FC082A1722D100C2B94A /* BatcheGenerator.swift */; };
 		4E44FC0B2A17239900C2B94A /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E44FC0A2A17239900C2B94A /* ViewModel.swift */; };
 		4E44FC0D2A1723B000C2B94A /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E44FC0C2A1723B000C2B94A /* Types.swift */; };
 		4E44FC0F2A17256500C2B94A /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E44FC0E2A17256500C2B94A /* Task.swift */; };
 		4E6411372A14123B001323A4 /* IOHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6411362A14123B001323A4 /* IOHandle.swift */; };
+		4E76AFA72A6D664E00A3D916 /* GeneticDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4E76AFA52A6D664E00A3D916 /* GeneticDatabase.xcdatamodeld */; };
 		4ECE72E02A080F43008A6A33 /* GeneticAlgorithmApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECE72DF2A080F43008A6A33 /* GeneticAlgorithmApp.swift */; };
 		4ECE72E22A080F43008A6A33 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECE72E12A080F43008A6A33 /* ContentView.swift */; };
 		4ECE72E42A080F44008A6A33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4ECE72E32A080F44008A6A33 /* Assets.xcassets */; };
@@ -23,11 +29,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E39F3DE2A71C57300504789 /* Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
+		4E39F3E02A71C78B00504789 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
+		4E39F3E22A71CB0800504789 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		4E39F3E42A71CB3200504789 /* CoreDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataError.swift; sourceTree = "<group>"; };
+		4E39F3E62A71E34400504789 /* CloudKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKit.swift; sourceTree = "<group>"; };
 		4E44FC082A1722D100C2B94A /* BatcheGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatcheGenerator.swift; sourceTree = "<group>"; };
 		4E44FC0A2A17239900C2B94A /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		4E44FC0C2A1723B000C2B94A /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		4E44FC0E2A17256500C2B94A /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		4E6411362A14123B001323A4 /* IOHandle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOHandle.swift; sourceTree = "<group>"; };
+		4E76AFA62A6D664E00A3D916 /* GeneticDatabase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GeneticDatabase.xcdatamodel; sourceTree = "<group>"; };
 		4ECE72DC2A080F43008A6A33 /* GeneticAlgorithm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeneticAlgorithm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ECE72DF2A080F43008A6A33 /* GeneticAlgorithmApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneticAlgorithmApp.swift; sourceTree = "<group>"; };
 		4ECE72E12A080F43008A6A33 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -50,6 +62,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4E39F3DD2A71C56200504789 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				4E39F3DE2A71C57300504789 /* Query.swift */,
+				4E39F3E02A71C78B00504789 /* Protocol.swift */,
+				4E39F3E22A71CB0800504789 /* DataController.swift */,
+				4E39F3E62A71E34400504789 /* CloudKit.swift */,
+				4E39F3E42A71CB3200504789 /* CoreDataError.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		4ECE72D32A080F43008A6A33 = {
 			isa = PBXGroup;
 			children = (
@@ -69,12 +93,14 @@
 		4ECE72DE2A080F43008A6A33 /* GeneticAlgorithm */ = {
 			isa = PBXGroup;
 			children = (
+				4E39F3DD2A71C56200504789 /* CoreData */,
+				4E76AFA52A6D664E00A3D916 /* GeneticDatabase.xcdatamodeld */,
+				4ECE72ED2A080F61008A6A33 /* Model.swift */,
+				4E6411362A14123B001323A4 /* IOHandle.swift */,
+				4ECE72F52A080FB2008A6A33 /* GeneticAlgorithm.swift */,
 				4ECE72DF2A080F43008A6A33 /* GeneticAlgorithmApp.swift */,
 				4ECE72E12A080F43008A6A33 /* ContentView.swift */,
-				4ECE72F52A080FB2008A6A33 /* GeneticAlgorithm.swift */,
-				4ECE72ED2A080F61008A6A33 /* Model.swift */,
 				4ECE72F12A080F77008A6A33 /* Error.swift */,
-				4E6411362A14123B001323A4 /* IOHandle.swift */,
 				4ECE72F32A080F83008A6A33 /* CustomFunction.swift */,
 				4E44FC0E2A17256500C2B94A /* Task.swift */,
 				4E44FC082A1722D100C2B94A /* BatcheGenerator.swift */,
@@ -166,11 +192,17 @@
 			files = (
 				4E6411372A14123B001323A4 /* IOHandle.swift in Sources */,
 				4E44FC0B2A17239900C2B94A /* ViewModel.swift in Sources */,
+				4E39F3E72A71E34400504789 /* CloudKit.swift in Sources */,
 				4ECE72EE2A080F61008A6A33 /* Model.swift in Sources */,
 				4E44FC0D2A1723B000C2B94A /* Types.swift in Sources */,
+				4E76AFA72A6D664E00A3D916 /* GeneticDatabase.xcdatamodeld in Sources */,
 				4E44FC0F2A17256500C2B94A /* Task.swift in Sources */,
 				4ECE72E22A080F43008A6A33 /* ContentView.swift in Sources */,
+				4E39F3DF2A71C57300504789 /* Query.swift in Sources */,
 				4ECE72E02A080F43008A6A33 /* GeneticAlgorithmApp.swift in Sources */,
+				4E39F3E12A71C78B00504789 /* Protocol.swift in Sources */,
+				4E39F3E32A71CB0800504789 /* DataController.swift in Sources */,
+				4E39F3E52A71CB3200504789 /* CoreDataError.swift in Sources */,
 				4ECE72F22A080F77008A6A33 /* Error.swift in Sources */,
 				4E44FC092A1722D100C2B94A /* BatcheGenerator.swift in Sources */,
 				4ECE72F42A080F83008A6A33 /* CustomFunction.swift in Sources */,
@@ -231,7 +263,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -285,7 +317,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -377,6 +409,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4E76AFA52A6D664E00A3D916 /* GeneticDatabase.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4E76AFA62A6D664E00A3D916 /* GeneticDatabase.xcdatamodel */,
+			);
+			currentVersion = 4E76AFA62A6D664E00A3D916 /* GeneticDatabase.xcdatamodel */;
+			path = GeneticDatabase.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 4ECE72D42A080F43008A6A33 /* Project object */;
 }

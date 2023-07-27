@@ -7,20 +7,23 @@
 
 import Foundation
 
-public struct Thing {
-    public var id: UUID
-    public var name:String
-    public var value: Float
-    public var weight: Float
 
-    public init(name: String, value: Float, weight: Float) {
-        self.id = UUID.init()
-        self.name = name
-        self.value = value
-        self.weight = weight
-    }
+//
 
-}
+//class PopulationAttributeTransformer:NSSecureUnarchiveFromDataTransformer{
+//    override static var allowedTopLevelClasses: [AnyClass] {
+//         [Thing.self]
+//     }
+//     
+//     static func register() {
+//         let className = String(describing: PopulationAttributeTransformer.self)
+//         let name = NSValueTransformerName(className)
+//         let transformer = PopulationAttributeTransformer()
+//         
+//         ValueTransformer.setValueTransformer(transformer, forName: name)
+//     }
+//}
+
 
 
 
