@@ -65,20 +65,22 @@ extension Query {
 }
 
 extension Query {
-    static func &&(lhs: Query, rhs: Query) -> Query {
-        var query = Query()
+    
+    static func +(lhs:Query, rhs: Query) -> Query{
+        let query = Query()
         query.model = lhs.model + rhs.model
         query.value = lhs.value + rhs.value
         query.separator = lhs.separator + rhs.separator
+        return query
+    }
+    static func &&(lhs: Query, rhs: Query) -> Query {
+        let query = lhs + rhs
         query.separator.append(.and)
         return query
     }
 
     static func ||(lhs: Query, rhs: Query) -> Query {
-        var query = Query()
-        query.model = lhs.model + rhs.model
-        query.value = lhs.value + rhs.value
-        query.separator = lhs.separator + rhs.separator
+        let query = lhs + rhs
         query.separator.append(.or)
         return query
     }

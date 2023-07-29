@@ -15,90 +15,167 @@ protocol CKCodable {
 }
 
 extension CKManager{
-    enum iCloudKitError: LocalizedError {
-        case iCloudAccountNotFound
-        case iCloudAccountNotDetermined
-        case iCloudAccountRestricted
-        case iCloudAccountUnknown
-        case iCloudAccountNoID
-        case iCloudApplicationPermissionNotGranted
-        case iCloudDatabaseError
-    }
-}
-class CKManager {
     
-    static let shared = CKManager()
-    
-    
-    let defaultContainer = CKContainer.default()
-    let container = CKContainer(identifier: "")
-    
-    var viewContext: CKContainer{
-        return CKContainer.default()
+    enum CloudKitAccountStatusGroup:Error {
+        case noAccount
+        case restricted
+        case couldNotDetermine
+        case unknown
+
+        init(accountStatus: CKAccountStatus) {
+            switch accountStatus {
+            case .noAccount:
+                self = .noAccount
+            case .restricted:
+                self = .restricted
+            case .couldNotDetermine:
+                self = .couldNotDetermine
+            default:
+                self = .unknown
+            }
+        }
+
+        var description: String {
+            switch self {
+            case .noAccount:
+                return "iCloud account not found."
+            case .restricted:
+                return "iCloud account access is restricted."
+            case .couldNotDetermine:
+                return "iCloud account status could not be determined."
+            case .unknown:
+                return "Unknown iCloud account status."
+            }
+        }
     }
 
     
-    func getiCloudStatus(completion: @escaping (Result<Bool, Error>) -> ()) {
-        defaultContainer.accountStatus { accountStatus, error in
-        switch accountStatus {
-          case .available:
-            completion(.success(true))
-          case .noAccount:
-            completion(.failure(iCloudKitError.iCloudAccountNotFound))
-          case .couldNotDetermine:
-            completion(.failure(iCloudKitError.iCloudAccountNotDetermined))
-          case .restricted:
-            completion(.failure(iCloudKitError.iCloudAccountRestricted))
-          default:
-            completion(.failure(iCloudKitError.iCloudAccountUnknown))
+
+    enum CKCustomError: Error {
+        case internalErrors(String)
+        case networkErrors(String)
+        case accountErrors(String)
+        case permissionErrors(String)
+        case recordErrors(String)
+        case assetErrors(String)
+        case databaseErrors(String)
+        case partialFailureErrors(String)
+        case serviceErrors(String)
+        case unknownErrors
+
+        init(error: CKError) {
+            switch error.code{
+             case .internalError, .serverRejectedRequest:
+                self = .internalErrors(error.localizedDescription)
+             case .networkUnavailable, .networkFailure:
+                 self = .networkErrors(error.localizedDescription)
+             case .badContainer:
+                 self = .accountErrors(error.localizedDescription)
+             case .notAuthenticated, .missingEntitlement:
+                 self = .permissionErrors(error.localizedDescription)
+             case .unknownItem, .invalidArguments, .resultsTruncated, .serverRecordChanged:
+                 self = .recordErrors(error.localizedDescription)
+             case .assetFileNotFound, .assetFileModified, .incompatibleVersion, .constraintViolation,
+                  .operationCancelled, .changeTokenExpired, .batchRequestFailed, .zoneBusy, .badDatabase,
+                  .quotaExceeded, .zoneNotFound, .limitExceeded, .userDeletedZone, .tooManyParticipants,
+                  .alreadyShared, .referenceViolation, .managedAccountRestricted, .participantMayNeedVerification,
+                  .assetNotAvailable, .serverResponseLost:
+                 self = .assetErrors(error.localizedDescription)
+             case .partialFailure:
+                 self = .partialFailureErrors(error.localizedDescription)
+             case .serviceUnavailable, .requestRateLimited:
+                 self = .serviceErrors(error.localizedDescription)
+             default:
+                 self = .unknownErrors
+             }
          }
-       }
-     }
-    
-    func requestPermission(completion: @escaping (Result<Bool, Error>) -> ()) {
-  
-        container.requestApplicationPermission(.userDiscoverability) { returnedStatus, error in
-        if returnedStatus == .granted {
-          completion(.success(true))
-        } else {
-          completion(.failure(iCloudKitError.iCloudApplicationPermissionNotGranted))
+
+
+        var description: String {
+            switch self {
+            case .internalErrors(let description):
+                return "Internal CloudKit error: \(description)"
+            case .networkErrors(let description):
+                return "Network error: \(description)"
+            case .accountErrors(let description):
+                return "Account error: \(description)"
+            case .permissionErrors(let description):
+                return "Permission error: \(description)"
+            case .recordErrors(let description):
+                return "Record error: \(description)"
+            case .assetErrors(let description):
+                return "Asset error: \(description)"
+            case .databaseErrors(let description):
+                return "Database error: \(description)"
+            case .partialFailureErrors(let description):
+                return "Partial failure error: \(description)"
+            case .serviceErrors(let description):
+                return "Service error: \(description)"
+            case .unknownErrors:
+                return "Unknown CloudKit error."
+            }
         }
-      }
+    }
+}
+
+class CKManager {
+    
+    static let shared = CKManager() 
+    
+    let container = CKContainer(identifier: "")
+
+    var database: CKDatabase{
+        return container.database(with: .private)
+    }
+
+
+    func getiCloudStatus(completion: @escaping (Result<Void, CloudKitAccountStatusGroup>) -> ()) {
+        container.accountStatus { accountStatus, error in
+            
+            if accountStatus == .available{
+                completion(.success(()))
+            }else{
+                completion(.failure(.init(accountStatus: accountStatus)))
+            }
+       }
     }
     
-    func getiCloudUserID(completion: @escaping(Result<CKRecord.ID, Error>) -> ()) {
+
+    func getiCloudUserID(completion: @escaping(Result<CKRecord.ID, CKCustomError>) -> ()) {
         
-        defaultContainer.fetchUserRecordID { userRecordID, error in
+        container.fetchUserRecordID { userRecordID, error in
+        guard let ckError = error as? CKError else { return }
         guard let recordID = userRecordID else {
-          completion(.failure(iCloudKitError.iCloudAccountNoID))
-          return
+            completion(.failure(.init(error: ckError)))
+            return
         }
         completion(.success(recordID))
       }
     }
     
-    func getUserName(forID userID: CKRecord.ID, completion: @escaping(Result<String, Error>) -> ()) {
+    func getUserName(forID userID: CKRecord.ID, completion: @escaping(Result<String, CKCustomError>) -> ()) {
       
-      var givenName: String = ""
-      var familyName: String = ""
-      defaultContainer.discoverUserIdentity(withUserRecordID: userID) { userIndentity, error in
+        var givenName: String = ""
+        var familyName: String = ""
+        
+        container.discoverUserIdentity(withUserRecordID: userID) { userIndentity, error in
         if let name = userIndentity?.nameComponents?.givenName {
           givenName = name
         }
         if let surname = userIndentity?.nameComponents?.familyName {
           familyName = surname
         }
-        if let error = error {
-          completion(.failure(error))
+        if let error = error as? CKError {
+            completion(.failure(.init(error: error)))
         } else {
             completion(.success(givenName + " " + familyName))
         }
       }
     }
     
-    func add<T: CKCodable>(item: T, completion: @escaping (Result<CKRecord?, Error>) -> ()) {
+    func add<T: CKCodable>(item: T, completion: @escaping (Result<CKRecord?, CKCustomError>) -> ()) {
       guard let record = item.record else {
-        completion(.failure(iCloudKitError.iCloudDatabaseError))
+          completion(.failure(.recordErrors("record not found")))
         return
       }
       save(record: record, completion: completion)
@@ -109,14 +186,14 @@ class CKManager {
       toItem parentItem: C,
       withReferenceFieldName referenceFieldName: String,
       withReferenceAction refAction: CKRecord.ReferenceAction,
-      completion: @escaping (Result<CKRecord?, Error>) -> ()) {
+      completion: @escaping (Result<CKRecord?, CKCustomError>) -> ()) {
 
         guard let childRecord = childItem.record else {
-          completion(.failure(iCloudKitError.iCloudDatabaseError))
+            completion(.failure(.recordErrors("child record not found")))
           return
         }
         guard let parentRecord = parentItem.record else {
-          completion(.failure(iCloudKitError.iCloudDatabaseError))
+            completion(.failure(.recordErrors("parental record not found")))
           return
         }
         childRecord[referenceFieldName] = CKRecord.Reference(record: parentRecord, action: refAction)
@@ -124,7 +201,7 @@ class CKManager {
     }
     
     func fetch<T:CKCodable>(
-      predicate: NSPredicate,
+      query: Query,
       recordType: CKRecord.RecordType,
       sortDescriptions: [NSSortDescriptor]? = nil,
       resultsLimit: Int? = nil,
@@ -132,7 +209,7 @@ class CKManager {
 
         // Create operation
         let queryOperation = createOperation(
-          predicate: predicate,
+          query: query,
           recordType: recordType,
           sortDescriptions: sortDescriptions,
           resultsLimit: resultsLimit
@@ -170,11 +247,12 @@ class CKManager {
                 
         // Create NSPredicate
         let recordToMatch = CKRecord.Reference(record: ownerRecord, action: .deleteSelf)
-        let predicate = NSPredicate(format: "\(searchField) == %@", recordToMatch)
+        let query = Query(varName: searchField, operant: .equalTo, value: recordToMatch)
+
                 
         // Create operation
         let queryOperation = createOperation(
-          predicate: predicate,
+            query: query,
           recordType: recordType,
           sortDescriptions: sortDescriptions,
           resultsLimit: resultsLimit
@@ -185,6 +263,8 @@ class CKManager {
         addRecordMatchedBlock(operation: queryOperation) { item in
           returnedItems.append(item)
         }
+          
+        //Pq as vezes os dados do banco ainda não foram carregados
                 
         // Result
         addQuerryResultBlock(operation: queryOperation) { finished in
@@ -195,13 +275,13 @@ class CKManager {
         addOperation(operation: queryOperation)
     }
     
-    func update<T: CKCodable>(item: T, completion: @escaping (Result<CKRecord?, Error>) -> ()) {
+    func update<T: CKCodable>(item: T, completion: @escaping (Result<CKRecord?, CKCustomError>) -> ()) {
       add(item: item, completion: completion)
     }
     
-    func delete<T: CKCodable>(item: T, completion: @escaping (Result<Bool, Error>) -> ()) {
+    func delete<T: CKCodable>(item: T, completion: @escaping (Result<Bool, CKCustomError>) -> ()) {
       guard let record = item.record else {
-        completion(.failure(iCloudKitError.iCloudDatabaseError))
+          completion(.failure(.recordErrors("record not found")))
         return
       }
       deleteBD(record: record, completion: completion)
@@ -222,6 +302,51 @@ class CKManager {
        }
     }
     
+    
+    private func awaitRecordMatchedBlock(operation: CKQueryOperation) async ->  Result<[CKRecord], Error> {
+        return await withCheckedContinuation { continuation in
+            var ckRecords: [CKRecord] = []
+            operation.recordMatchedBlock = { (returnedRecordID, returnedResult) in
+                switch returnedResult {
+                    case .success(let ckRecord):
+                        ckRecords.append(ckRecord)
+                    case .failure(let error):
+                        continuation.resume(returning: .failure(error))
+                }
+            }
+            continuation.resume(returning: .success(ckRecords))
+        }
+    }
+
+    private func addRecordMatchedBlock<T: CKCodable>(ofType: T.Type, operation: CKQueryOperation) async throws -> [T] {
+        do {
+            let returnedResult = await awaitRecordMatchedBlock(operation: operation)
+            switch returnedResult {
+            case .success(let record):
+                let itens = record.compactMap(T.init)
+                if itens.isEmpty{
+                    throw CKCustomError.recordErrors("Failed to create item")
+                }
+                return itens
+            case .failure(let error):
+                throw CKCustomError(error: error as! CKError)
+            }
+        } catch {
+            // Handle any potential errors if the asynchronous operation fails
+            throw CKCustomError.unknownErrors
+        }
+    }
+
+
+
+    private func addQuerryResultBlock(operation: CKQueryOperation) async -> Bool {
+        return await withCheckedContinuation { continuation in
+            operation.queryResultBlock = { _ in
+                continuation.resume(returning: true)
+            }
+        }
+    }
+
     private func addQuerryResultBlock(
       operation: CKQueryOperation,
       completion: @escaping(_ finished: Bool) -> ()) {
@@ -231,12 +356,12 @@ class CKManager {
     }
     
     private func createOperation(
-      predicate: NSPredicate,
+      query: Query,
       recordType: CKRecord.RecordType,
       sortDescriptions: [NSSortDescriptor]? = nil,
       resultsLimit: Int? = nil) -> CKQueryOperation {
 
-        let query = CKQuery(recordType: recordType, predicate: predicate)
+        let query = CKQuery(recordType: recordType, predicate: query.predicate)
         query.sortDescriptors = sortDescriptions
         let queryOperation = CKQueryOperation(query: query)
         if let limit = resultsLimit {
@@ -246,31 +371,229 @@ class CKManager {
     }
     
     private func addOperation(operation: CKDatabaseOperation) {
-      CKContainer.default().publicCloudDatabase.add(operation)
+      database.add(operation)
     }
     
-    private func save(record: CKRecord, completion: @escaping (Result<CKRecord?, Error>) -> ()) {
-      let iCloudPD = CKContainer.default().publicCloudDatabase
-      iCloudPD.save(record) { returnedRecord, error in
-        if let error = error {
-          completion(.failure(error))
+    private func save(record: CKRecord, completion: @escaping (Result<CKRecord?, CKCustomError>) -> ()) {
+        database.save(record) { returnedRecord, error in
+        if let error = error as? CKError {
+            completion(.failure(.init(error: error)))
         } else {
           completion(.success(returnedRecord))
         }
       }
     }
     
-    private func deleteBD(record: CKRecord, completion: @escaping (Result<Bool, Error>) -> ()) {
-      let iCloudPD = CKContainer.default().publicCloudDatabase
-      iCloudPD.delete(withRecordID: record.recordID) { returnedID, error in
-        if let error = error {
-          completion(.failure(error))
+    private func deleteBD(record: CKRecord, completion: @escaping (Result<Bool, CKCustomError>) -> ()) {
+        database.delete(withRecordID: record.recordID) { returnedID, error in
+        if let error = error as? CKError {
+            completion(.failure(.init(error: error)))
         } else {
           completion(.success(true))
         }
       }
     }
 
+}
+
+extension CKManager{
+    func getiCloudStatus() async -> Result<Void, CloudKitAccountStatusGroup> {
+          do{
+              let accountStatus = try await container.accountStatus()
+              
+              if accountStatus == .available{
+                return .success(())
+              }else{
+                  return .failure(.init(accountStatus: accountStatus))
+              }
+              
+          }catch{
+              return .failure(.unknown)
+          }
+      }
 
     
+    
+    func getiCloudUserID() async -> Result<CKRecord.ID, CKCustomError> {
+        do {
+            let recordID: CKRecord.ID = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<CKRecord.ID, Error>) in
+                container.fetchUserRecordID { userRecordID, error in
+                    if let error = error as? CKError {
+                        continuation.resume(throwing: error)
+                    } else if let userRecordID = userRecordID {
+                        continuation.resume(returning: userRecordID)
+                    }
+                }
+            }
+            return .success(recordID)
+        } catch {
+            return .failure(.init(error: error as! CKError))
+        }
+    }
+
+
+
+    func getUserName(forID userID: CKRecord.ID) async -> Result<String, CKCustomError> {
+        do {
+            let userIndentity = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<CKUserIdentity?, Error>) in
+                container.discoverUserIdentity(withUserRecordID: userID) { userIndentity, error in
+                    if let error = error as? CKError {
+                        continuation.resume(throwing: error)
+                    } else {
+                        continuation.resume(returning: userIndentity)
+                    }
+                }
+            }
+
+            if let name = userIndentity?.nameComponents?.givenName, let surname = userIndentity?.nameComponents?.familyName {
+                return .success(name + " " + surname)
+            } else {
+                return .failure(.accountErrors("User data return nil"))
+            }
+        } catch {
+            return .failure(.init(error: error as! CKError))
+        }
+    }
+
+
+
+    func add<T: CKCodable>(item: T) async -> Result<CKRecord?, CKCustomError> {
+        guard let record = item.record else {
+            return .failure(.recordErrors("record not found"))
+        }
+        do {
+            return .success(try await save(record: record))
+        } catch {
+            return .failure(.init(error: error as! CKError))
+        }
+    }
+
+    func addWithReference<T: CKCodable, C: CKCodable>(
+        fromItem childItem: T,
+        toItem parentItem: C,
+        withReferenceFieldName referenceFieldName: String,
+        withReferenceAction refAction: CKRecord.ReferenceAction
+    ) async -> Result<CKRecord?, CKCustomError> {
+        guard let childRecord = childItem.record else {
+            return .failure(.recordErrors("child record not found"))
+        }
+        guard let parentRecord = parentItem.record else {
+            return .failure(.recordErrors("parental record not found"))
+        }
+        childRecord[referenceFieldName] = CKRecord.Reference(record: parentRecord, action: refAction)
+        do {
+            return .success(try await save(record: childRecord))
+        } catch {
+            return .failure(.init(error: error as! CKError))
+        }
+    }
+
+    func fetch<T: CKCodable>(
+        query: Query,
+        recordType: CKRecord.RecordType,
+        sortDescriptions: [NSSortDescriptor]? = nil,
+        resultsLimit: Int? = nil
+    ) async -> Result<[T], CKCustomError> {
+        do {
+            let queryOperation = createOperation(
+                query: query,
+                recordType: recordType,
+                sortDescriptions: sortDescriptions,
+                resultsLimit: resultsLimit
+            )
+
+            let returnedItems = try await addRecordMatchedBlock(ofType: T.self, operation: queryOperation)
+            
+            if await self.addQuerryResultBlock(operation: queryOperation){
+                return .success(returnedItems)
+            }else{
+                return .failure(.databaseErrors(""))
+            }
+        
+            
+        } catch {
+            return .failure(CKCustomError(error: error as! CKError))
+        }
+    }
+    
+    func fetchReferences<T: CKCodable, C: CKCodable>(
+        forItem owner: T,
+        andField searchField: String,
+        recordType: CKRecord.RecordType,
+        sortDescriptions: [NSSortDescriptor]? = nil,
+        resultsLimit: Int? = nil
+    ) async -> Result<[C], CKCustomError> {
+        guard let ownerRecord = owner.record else {
+            return .success([])
+        }
+
+        let recordToMatch = CKRecord.Reference(record: ownerRecord, action: .deleteSelf)
+        let query = Query(varName: searchField, operant: .equalTo, value: recordToMatch)
+
+        let queryOperation = createOperation(
+            query: query,
+            recordType: recordType,
+            sortDescriptions: sortDescriptions,
+            resultsLimit: resultsLimit
+        )
+
+    
+        do {
+            let returnedItems = try await addRecordMatchedBlock(ofType: C.self, operation: queryOperation)
+            
+            if await self.addQuerryResultBlock(operation: queryOperation){
+                return .success(returnedItems)
+            }else{
+                return .failure(.databaseErrors(""))
+            }
+            
+        } catch {
+            return .failure(.init(error: error as! CKError))
+        }
+    }
+
+
+
+
+    func update<T: CKCodable>(item: T) async -> Result<CKRecord?, CKCustomError> {
+        return await add(item: item)
+    }
+
+    func delete<T: CKCodable>(item: T) async -> Result<Bool, CKCustomError> {
+        guard let record = item.record else {
+            return .failure(.recordErrors("record not found"))
+        }
+        do {
+            return .success(try await deleteBD(record: record))
+        } catch {
+            return .failure(.init(error: error as! CKError))
+        }
+    }
+
+
+    private func save(record: CKRecord) async throws -> CKRecord? {
+        return try await withCheckedThrowingContinuation { continuation in
+            database.save(record) { returnedRecord, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: returnedRecord)
+                }
+            }
+        }
+    }
+
+    private func deleteBD(record: CKRecord) async throws -> Bool {
+        return try await withCheckedThrowingContinuation { continuation in
+            database.delete(withRecordID: record.recordID) { _, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: true)
+                }
+            }
+        }
+    }
 }
+
+

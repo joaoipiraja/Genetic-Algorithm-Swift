@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 enum CoreDataError: Error {
     case loadFailed
@@ -35,4 +36,5 @@ enum CoreDataError: Error {
         }
     }
 }
+
 

@@ -66,9 +66,9 @@
 			isa = PBXGroup;
 			children = (
 				4E39F3DE2A71C57300504789 /* Query.swift */,
+				4E39F3E62A71E34400504789 /* CloudKit.swift */,
 				4E39F3E02A71C78B00504789 /* Protocol.swift */,
 				4E39F3E22A71CB0800504789 /* DataController.swift */,
-				4E39F3E62A71E34400504789 /* CloudKit.swift */,
 				4E39F3E42A71CB3200504789 /* CoreDataError.swift */,
 			);
 			path = CoreData;

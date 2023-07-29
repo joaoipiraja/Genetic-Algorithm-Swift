@@ -26,6 +26,7 @@ class DataController: ObservableObject {
                 }
             }
             container.viewContext.automaticallyMergesChangesFromParent = true
+            container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         }
 
 
@@ -43,7 +44,7 @@ class DataController: ObservableObject {
             }
         }
 
-        func getObject<T: NSManagedObject>(ofType: T.Type) async -> Result<[T], CoreDataError> {
+        func getAllObject<T: NSManagedObject>(ofType: T.Type) async -> Result<[T], CoreDataError> {
             var response: [T] = []
             let request: NSFetchRequest<T> = T.fetchRequest() as! NSFetchRequest<T>
 
@@ -60,7 +61,7 @@ class DataController: ObservableObject {
         func getObject<T: NSManagedObject>(ofType: T.Type, withId id: UUID) async -> Result<T?, CoreDataError> {
             var response: T? = nil
             let request: NSFetchRequest<T> = T.fetchRequest() as! NSFetchRequest<T>
-            request.predicate = NSPredicate(format: "id == %@", id.uuidString)
+            request.predicate = Query(varName: "id", operant: .equalTo, value: id.uuidString).predicate
             request.fetchLimit = 1
 
             do {
@@ -91,7 +92,7 @@ class DataController: ObservableObject {
 
         @discardableResult  func updateObject<T: NSManagedObject>(ofType: T.Type, withId id: UUID, completion: @escaping (T) -> ()) async -> Result<Void, CoreDataError> {
             let request: NSFetchRequest<T> = T.fetchRequest() as! NSFetchRequest<T>
-            request.predicate = NSPredicate(format: "id == %@", id.uuidString)
+            request.predicate = Query(varName: "id", operant: .equalTo, value: id.uuidString).predicate
             request.fetchLimit = 1
 
             do {

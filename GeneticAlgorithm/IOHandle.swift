@@ -49,7 +49,7 @@ class ThingViewModel: ObservableObject{
     
     func getAllThings() async{
         
-        let result = await DataController.shared.getObject(ofType: Thing.self)
+        let result = await DataController.shared.getAllObject(ofType: Thing.self)
         
         switch result{
             
@@ -90,7 +90,6 @@ class ThingViewModel: ObservableObject{
 }
 
 
-
 class CitizenViewModel{
     
     var citizens: [CitizenViewModel] = []
@@ -119,7 +118,7 @@ class CitizenViewModel{
     
     func getAllCitizens() async{
         
-        let result = await DataController.shared.getObject(ofType: Citizens.self)
+        let result = await DataController.shared.getAllObject(ofType: Citizens.self)
         switch result{
             case .success(let citizen):
                 self.citizens = citizen.map(CitizenViewModel.init)
