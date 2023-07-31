@@ -18,6 +18,8 @@ protocol CKCodable {
 
 class CKManager {
     
+    
+    
     static let shared = CKManager() 
     
     let container = CKContainer(identifier: "")

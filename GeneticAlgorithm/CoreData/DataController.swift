@@ -10,6 +10,8 @@ import CoreData
 
 class DataController: ObservableObject {
     
+    //https://youtu.be/TsfOYHbf4Ew
+    
     let container = NSPersistentContainer(name: "GeneticDatabase")
     static let shared = DataController()
     
