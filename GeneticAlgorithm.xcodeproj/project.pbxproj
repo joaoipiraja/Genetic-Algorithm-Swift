@@ -12,6 +12,7 @@
 		4E39F3E32A71CB0800504789 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E39F3E22A71CB0800504789 /* DataController.swift */; };
 		4E39F3E52A71CB3200504789 /* CoreDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E39F3E42A71CB3200504789 /* CoreDataError.swift */; };
 		4E39F3E72A71E34400504789 /* CloudKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E39F3E62A71E34400504789 /* CloudKit.swift */; };
+		4E39F4112A77C98F00504789 /* CloudKitError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E39F4102A77C98F00504789 /* CloudKitError.swift */; };
 		4E44FC092A1722D100C2B94A /* BatcheGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E44FC082A1722D100C2B94A /* BatcheGenerator.swift */; };
 		4E44FC0B2A17239900C2B94A /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E44FC0A2A17239900C2B94A /* ViewModel.swift */; };
 		4E44FC0D2A1723B000C2B94A /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E44FC0C2A1723B000C2B94A /* Types.swift */; };
@@ -34,6 +35,7 @@
 		4E39F3E22A71CB0800504789 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		4E39F3E42A71CB3200504789 /* CoreDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataError.swift; sourceTree = "<group>"; };
 		4E39F3E62A71E34400504789 /* CloudKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKit.swift; sourceTree = "<group>"; };
+		4E39F4102A77C98F00504789 /* CloudKitError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitError.swift; sourceTree = "<group>"; };
 		4E44FC082A1722D100C2B94A /* BatcheGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatcheGenerator.swift; sourceTree = "<group>"; };
 		4E44FC0A2A17239900C2B94A /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		4E44FC0C2A1723B000C2B94A /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
@@ -65,11 +67,12 @@
 		4E39F3DD2A71C56200504789 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				4E39F3DE2A71C57300504789 /* Query.swift */,
-				4E39F3E62A71E34400504789 /* CloudKit.swift */,
 				4E39F3E02A71C78B00504789 /* Protocol.swift */,
 				4E39F3E22A71CB0800504789 /* DataController.swift */,
+				4E39F3E62A71E34400504789 /* CloudKit.swift */,
 				4E39F3E42A71CB3200504789 /* CoreDataError.swift */,
+				4E39F4102A77C98F00504789 /* CloudKitError.swift */,
+				4E39F3DE2A71C57300504789 /* Query.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 				4E44FC092A1722D100C2B94A /* BatcheGenerator.swift in Sources */,
 				4ECE72F42A080F83008A6A33 /* CustomFunction.swift in Sources */,
 				4ECE72F62A080FB2008A6A33 /* GeneticAlgorithm.swift in Sources */,
+				4E39F4112A77C98F00504789 /* CloudKitError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
